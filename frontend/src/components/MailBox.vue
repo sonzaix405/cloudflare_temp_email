@@ -139,7 +139,7 @@ const multiActionDeleteProgress = ref({ percentage: 0, tip: '0/0' })
 
 const { t } = useI18n({
   messages: {
-    en: {
+        en: {
       success: 'Success',
       autoRefresh: 'Auto Refresh',
       refreshAfter: 'Refresh After {msg} Seconds',
@@ -162,11 +162,7 @@ const { t } = useI18n({
       nextMail: 'Next',
       keywordQueryTip: 'Filter current page',
       query: 'Query',
-    },
-    zh: {
-      success: '成功',
-      autoRefresh: '自动刷新',
-      refreshAfter: '{msg}秒后刷新',
+    }秒后刷新',
       refresh: '刷新',
       downloadMail: '下载邮件',
       attachments: '查看附件',

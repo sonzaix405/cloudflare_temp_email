@@ -8,7 +8,7 @@ import {
     DarkModeFilled, LightModeFilled, MenuFilled,
     AdminPanelSettingsFilled
 } from '@vicons/material'
-import { GithubAlt, Language, User, Home } from '@vicons/fa'
+import { GithubAlt, User, Home } from '@vicons/fa'
 
 import { useGlobalState } from '../store'
 import { api } from '../api'
@@ -40,14 +40,6 @@ const authFunc = async () => {
     }
 }
 
-const changeLocale = async (lang) => {
-    if (lang == 'zh') {
-        await router.push(route.fullPath.replace('/en', ''));
-    } else {
-        await router.push(`/${lang}${route.fullPath}`);
-    }
-}
-
 const { locale, t } = useI18n({
     messages: {
         en: {
@@ -60,17 +52,6 @@ const { locale, t } = useI18n({
             menu: 'Menu',
             user: 'User',
             ok: 'OK',
-        },
-        zh: {
-            title: 'Cloudflare 临时邮件',
-            dark: '暗色',
-            light: '亮色',
-            accessHeader: '访问密码',
-            accessTip: '请输入站点访问密码',
-            home: '主页',
-            menu: '菜单',
-            user: '用户',
-            ok: '确定',
         }
     }
 });
@@ -157,27 +138,6 @@ const menuOptions = computed(() => [
             }
         ),
         key: "theme"
-    },
-    {
-        label: () => h(
-            NButton,
-            {
-                text: true,
-                size: "small",
-                style: "width: 100%",
-                onClick: async () => {
-                    locale.value == 'zh' ? await changeLocale('en') : await changeLocale('zh');
-                    showMobileMenu.value = false;
-                }
-            },
-            {
-                default: () => locale.value == 'zh' ? "English" : "中文",
-                icon: () => h(
-                    NIcon, { component: Language }
-                )
-            }
-        ),
-        key: "lang"
     },
     {
         label: () => h(

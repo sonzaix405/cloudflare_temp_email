@@ -12,7 +12,7 @@ const { preferShowTextMail, useIframeShowMail, useUTCDate } = useGlobalState();
 
 const { t } = useI18n({
   messages: {
-    en: {
+        en: {
       delete: 'Delete',
       deleteMailTip: 'Are you sure you want to delete mail?',
       attachments: 'View Attachments',
@@ -24,19 +24,6 @@ const { t } = useI18n({
       saveToS3: 'Save to S3',
       size: 'Size',
       fullscreen: 'Fullscreen',
-    },
-    zh: {
-      delete: '删除',
-      deleteMailTip: '确定要删除邮件吗?',
-      attachments: '查看附件',
-      downloadMail: '下载邮件',
-      reply: '回复',
-      forward: '转发',
-      showTextMail: '显示纯文本邮件',
-      showHtmlMail: '显示HTML邮件',
-      saveToS3: '保存到S3',
-      size: '大小',
-      fullscreen: '全屏',
     }
   }
 });

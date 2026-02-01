@@ -10,7 +10,7 @@ const message = useMessage()
 
 const { t } = useI18n({
   messages: {
-    en: {
+        en: {
       address: 'Address',
       success: 'Success',
       is_enabled: 'Is Enabled',
@@ -26,23 +26,6 @@ const { t } = useI18n({
       balance: 'Balance',
       query: 'Query',
       ok: 'OK'
-    },
-    zh: {
-      address: '地址',
-      success: '成功',
-      is_enabled: '是否启用',
-      enable: '启用',
-      disable: '禁用',
-      modify: '修改',
-      delete: '删除',
-      deleteTip: '确定删除吗？',
-      created_at: '创建时间',
-      action: '操作',
-      itemCount: '总数',
-      modalTip: '请输入发件额度',
-      balance: '余额',
-      query: '查询',
-      ok: '确定'
     }
   }
 });

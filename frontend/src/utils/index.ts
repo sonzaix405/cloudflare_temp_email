@@ -6,10 +6,7 @@ export const hashPassword = async (password: string) => {
 }
 
 export const getRouterPathWithLang = (path: string, lang: string) => {
-    if (!lang || lang === 'zh') {
-        return path;
-    }
-    return `/${lang}${path}`;
+    return path;
 }
 
 export const utcToLocalDate = (utcDate: string, useUTCDate: boolean) => {

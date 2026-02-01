@@ -34,7 +34,7 @@ const tagThemeOverrides = computed(() => {
 
 const { t } = useI18n({
   messages: {
-    en: {
+        en: {
       authCode: 'Verification Code',
       authLink: 'Authentication Link',
       serviceLink: 'Service Link',
@@ -43,16 +43,6 @@ const { t } = useI18n({
       copySuccess: 'Copied successfully',
       copyFailed: 'Copy failed',
       open: 'Open',
-    },
-    zh: {
-      authCode: '验证码',
-      authLink: '认证链接',
-      serviceLink: '服务链接',
-      subscriptionLink: '订阅链接',
-      otherLink: '其他链接',
-      copySuccess: '复制成功',
-      copyFailed: '复制失败',
-      open: '打开',
     }
   }
 });
