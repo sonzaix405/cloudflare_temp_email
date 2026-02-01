@@ -52,8 +52,6 @@ const { t } = useI18n({
             sqlNamePlaceholder: "e.g. Clean old logs",
             sqlPlaceholder: "e.g. DELETE FROM raw_mails WHERE source GLOB '*{'@'}example.com' AND created_at < datetime('now', '-3 day')",
             deleteCustomSql: "Delete",
-        }example.com' AND created_at < datetime('now', '-3 day')",
-            deleteCustomSql: "删除",
         }
     }
 });

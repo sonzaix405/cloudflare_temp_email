@@ -47,12 +47,6 @@ const { t } = useI18n({
             addressCredentialTip: 'Please copy the Mail Address Credential and you can use it to login',
             deleteSuccess: 'Mail deleted successfully',
             refreshAfter: 'Refresh After {msg} Seconds',
-        } / {total} 封邮件',
-            accountSettings: "账户设置",
-            addressCredential: '邮箱地址凭证',
-            addressCredentialTip: '请复制邮箱地址凭证，你可以使用它登录你的邮箱。',
-            deleteSuccess: '邮件删除成功',
-            refreshAfter: '{msg}秒后刷新',
         }
     }
 })
@@ -63,7 +57,7 @@ const copyAddress = async () => {
         await navigator.clipboard.writeText(settings.value.address)
         message.success(t('addressCopied'))
     } catch (error) {
-        message.error('复制失败')
+        message.error('Copy failed')
     }
 }
 

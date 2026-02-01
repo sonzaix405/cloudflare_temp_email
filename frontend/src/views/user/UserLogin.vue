@@ -38,18 +38,6 @@ const { t } = useI18n({
             pleaseLogin: 'Please login',
             loginWithPasskey: 'Login with Passkey',
             loginWith: 'Login with {provider}',
-        } 秒后失效',
-            waitforVerifyCode: '等待{timeout}秒',
-            forgotPassword: '忘记密码',
-            cannotForgotPassword: '未开启邮箱验证或未开启注册功能，无法重置密码，请联系管理员',
-            resetPassword: '重置密码',
-            pleaseInput: '请输入邮箱和密码',
-            pleaseInputEmail: '请输入邮箱',
-            pleaseInputCode: '请输入验证码',
-            pleaseCompleteTurnstile: '请完成人机验证',
-            pleaseLogin: '请登录',
-            loginWithPasskey: '使用 Passkey 登录',
-            loginWith: '使用 {provider} 登录',
         }
     }
 });

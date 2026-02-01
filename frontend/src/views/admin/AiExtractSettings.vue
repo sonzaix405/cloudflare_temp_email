@@ -19,9 +19,6 @@ const { t } = useI18n({
             allowListTip: "Wildcard * matches any characters, e.g. *{'@'}example.com matches all addresses under example.com domain",
             manualInputPrompt: 'Type and press Enter to add',
             disabledTip: 'When disabled, AI extraction will process all email addresses',
-        }example.com 可匹配 example.com 域名下的所有地址",
-            manualInputPrompt: '输入后按回车键添加',
-            disabledTip: '未启用时，所有邮箱地址都可使用 AI 提取功能',
         }
     }
 });
