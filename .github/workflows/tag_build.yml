@@ -1,18 +1,24 @@
 name: Tag Build CI
 
 on:
-  push:
-    tags:
-      - "*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag release (contoh: v1.0.0). Kosongkan untuk auto."
+        required: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
 
       - name: Install Node.js
         uses: actions/setup-node@v4
@@ -21,10 +27,24 @@ jobs:
 
       - uses: pnpm/action-setup@v3
         name: Install pnpm
-        id: pnpm-install
         with:
           version: 8
           run_install: false
+
+      - name: Decide tag
+        run: |
+          if [ -n "${{ github.event.inputs.tag }}" ]; then
+            echo "TAG=${{ github.event.inputs.tag }}" >> $GITHUB_ENV
+          else
+            echo "TAG=v${{ github.run_number }}" >> $GITHUB_ENV
+          fi
+
+      - name: Create & push tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "$TAG" -m "Release $TAG"
+          git push origin "$TAG"
 
       - name: Build Frontend
         run: cd frontend && pnpm install --no-frozen-lockfile && pnpm build:release
@@ -50,18 +70,20 @@ jobs:
       - name: Build Worker with wasm mail parser
         run: |
           cd worker
-          echo "Using mail-parser-wasm-worker"
           pnpm add mail-parser-wasm-worker
           git apply ../.github/config/mail-parser-wasm-worker.patch
-          echo "Applied mail-parser-wasm-worker patch"
           pnpm build
           zip -r worker-with-wasm-mail-parser.zip dist/worker.js dist/*.wasm
 
       - name: Upload to Release
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ env.TAG }}
+          name: ${{ env.TAG }}
           files: |
             frontend/frontend.zip
             frontend/telegram-frontend.zip
             worker/worker.js
             worker/worker-with-wasm-mail-parser.zip
+          overwrite_files: true
+          token: ${{ secrets.GITHUB_TOKEN }}
