@@ -36,6 +36,7 @@ const { t } = useI18n({
             exitSimpleIndex: 'Exit Simple',
             copyAddress: 'Copy',
             addressCopied: 'Address copied successfully',
+            copyFailed: 'Copy failed',
             refreshMails: 'Refresh',
             noMails: 'No mails found',
             prevPage: 'Previous',
@@ -57,7 +58,7 @@ const copyAddress = async () => {
         await navigator.clipboard.writeText(settings.value.address)
         message.success(t('addressCopied'))
     } catch (error) {
-        message.error('Copy failed')
+        message.error(t('copyFailed'))
     }
 }
 
