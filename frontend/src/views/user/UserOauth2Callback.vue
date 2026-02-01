@@ -19,10 +19,6 @@ const { t } = useI18n({
         en: {
             logging: 'Logging in...',
             stateNotMatch: 'state not match',
-        },
-        zh: {
-            logging: '登录中...',
-            stateNotMatch: 'state 不匹配',
         }
     }
 });

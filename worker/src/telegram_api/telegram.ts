@@ -18,63 +18,48 @@ const getTgMessages = async (
     ctx?: TgContext,
     userId?: string | null
 ): Promise<LocaleMessages> => {
-    // Check if user language config is enabled (default false)
-    if (!getBooleanValue(c.env.TG_ALLOW_USER_LANG)) {
-        return i18n.getMessages(c.env.DEFAULT_LANG || 'zh');
-    }
-
-    const uid = userId || ctx?.message?.from?.id?.toString() || ctx?.callbackQuery?.from?.id?.toString();
-    if (uid) {
-        const savedLang = await c.env.KV.get(`${CONSTANTS.TG_KV_PREFIX}:lang:${uid}`);
-        if (savedLang) { return i18n.getMessages(savedLang); }
-    }
-    return i18n.getMessages(c.env.DEFAULT_LANG || 'zh');
+    // Always return English messages
+    return i18n.getMessages('en');
 };
 
-// Bilingual command descriptions with full usage instructions
+// Command descriptions
 const COMMANDS = [
     {
         command: "start",
-        description: "开始使用 | Get started"
+        description: "Get started"
     },
     {
         command: "new",
-        description: "新建邮箱, /new <name>@<domain>, name[a-z0-9]有效, 为空随机生成, @domain可选 | Create address, /new <name>@<domain>, name[a-z0-9] valid, empty=random, @domain optional"
+        description: "Create address, /new <name>@<domain>, name[a-z0-9] valid, empty=random, @domain optional"
     },
     {
         command: "address",
-        description: "查看邮箱地址列表 | View address list"
+        description: "View address list"
     },
     {
         command: "bind",
-        description: "绑定邮箱, /bind <邮箱地址凭证> | Bind address, /bind <credential>"
+        description: "Bind address, /bind <credential>"
     },
     {
         command: "unbind",
-        description: "解绑邮箱, /unbind <邮箱地址> | Unbind address, /unbind <address>"
+        description: "Unbind address, /unbind <address>"
     },
     {
         command: "delete",
-        description: "删除邮箱, /delete <邮箱地址> | Delete address, /delete <address>"
+        description: "Delete address, /delete <address>"
     },
     {
         command: "mails",
-        description: "查看邮件, /mails <邮箱地址>, 不输入地址默认第一个 | View mails, /mails <address>, default first if empty"
+        description: "View mails, /mails <address>, default first if empty"
     },
     {
         command: "cleaninvalidaddress",
-        description: "清理无效地址 | Clean invalid addresses"
-    },
-    {
-        command: "lang",
-        description: "设置语言 /lang <zh|en> | Set language /lang <zh|en>"
+        description: "Clean invalid addresses"
     },
 ]
 
 export const getTelegramCommands = (c: Context<HonoCustomType>) => {
-    return getBooleanValue(c.env.TG_ALLOW_USER_LANG)
-        ? COMMANDS
-        : COMMANDS.filter(cmd => cmd.command !== "lang");
+    return COMMANDS;
 }
 
 export function newTelegramBot(c: Context<HonoCustomType>, token: string): Telegraf {
@@ -248,35 +233,6 @@ export function newTelegramBot(c: Context<HonoCustomType>, token: string): Teleg
         }
     });
 
-    bot.command("lang", async (ctx: TgContext) => {
-        const userId = ctx?.message?.from?.id;
-        if (!userId) {
-            const msgs = await getTgMessages(c, ctx);
-            return await ctx.reply(msgs.TgUnableGetUserInfoMsg);
-        }
-
-        const msgs = await getTgMessages(c, ctx);
-
-        // Check if user language config is enabled
-        if (!getBooleanValue(c.env.TG_ALLOW_USER_LANG)) {
-            return await ctx.reply(msgs.TgLangFeatureDisabledMsg);
-        }
-
-        // @ts-ignore
-        const lang = ctx?.message?.text.slice("/lang".length).trim().toLowerCase();
-        if (lang === 'zh' || lang === 'en') {
-            await c.env.KV.put(`${CONSTANTS.TG_KV_PREFIX}:lang:${userId}`, lang);
-            return await ctx.reply(`${msgs.TgLangSetSuccessMsg} ${lang === 'zh' ? '中文' : 'English'}`);
-        }
-
-        const currentLang = await c.env.KV.get(`${CONSTANTS.TG_KV_PREFIX}:lang:${userId}`);
-        return await ctx.reply(
-            `${msgs.TgCurrentLangMsg} ${currentLang || 'auto'}\n`
-            + `${msgs.TgSelectLangMsg}\n`
-            + `/lang zh - 中文\n`
-            + `/lang en - English`
-        );
-    });
 
     const queryMail = async (ctx: TgContext, queryAddress: string, mailIndex: number, edit: boolean) => {
         const msgs = await getTgMessages(c, ctx);
@@ -437,7 +393,7 @@ export async function sendMailToTelegram(
     };
 
     if (globalPush) {
-        const globalMsgs = i18n.getMessages(c.env.DEFAULT_LANG || 'zh');
+        const globalMsgs = i18n.getMessages('en');
         for (const pushId of settings.globalMailPushList) {
             await buildAndSend(pushId, globalMsgs);
         }

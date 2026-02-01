@@ -45,10 +45,9 @@ app.use('/*', async (c, next) => {
 		return c.env.ASSETS.fetch(url);
 	}
 
-	// save language in context
-	const lang = c.req.raw.headers.get("x-lang");
-	if (lang) { c.set("lang", lang); }
-	const msgs = i18n.getMessages(lang || c.env.DEFAULT_LANG);
+	// save language in context (always English)
+	c.set("lang", "en");
+	const msgs = i18n.getMessages("en");
 
 	// check header x-custom-auth
 	const passwords = getPasswords(c);
@@ -164,7 +163,7 @@ app.use('/api/*', async (c, next) => {
 		return await jwt({ secret: c.env.JWT_SECRET, alg: "HS256" })(c, next);
 	} catch (e) {
 		console.warn(e);
-		const lang = c.get("lang") || c.env.DEFAULT_LANG;
+		const lang = "en";
 		const msgs = i18n.getMessages(lang);
 		return c.text(msgs.InvalidAddressCredentialMsg, 401)
 	}
@@ -183,7 +182,7 @@ app.use('/user_api/*', async (c, next) => {
 		return;
 	}
 
-	const lang = c.req.raw.headers.get("x-lang") || c.env.DEFAULT_LANG;
+	const lang = "en";
 	const msgs = i18n.getMessages(lang);
 
 	try {
@@ -223,7 +222,7 @@ app.use('/admin/*', async (c, next) => {
 			return;
 		}
 	}
-	const lang = c.req.raw.headers.get("x-lang") || c.env.DEFAULT_LANG;
+	const lang = "en";
 	const msgs = i18n.getMessages(lang);
 	// check if user is admin
 	const access_token = c.req.raw.headers.get("x-user-access-token");
@@ -264,7 +263,7 @@ app.route('/', apiSendMail)
 app.route('/', telegramApi)
 
 const health_check = async (c: Context<HonoCustomType>) => {
-	const lang = c.req.raw.headers.get("x-lang") || c.env.DEFAULT_LANG;
+	const lang = "en";
 	const msgs = i18n.getMessages(lang);
 	if (!c.env.DB) {
 		return c.text(msgs.DBNotAvailableMsg, 400);

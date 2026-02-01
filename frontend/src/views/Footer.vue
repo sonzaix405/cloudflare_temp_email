@@ -8,9 +8,6 @@ const { t } = useI18n({
     messages: {
         en: {
             copyright: "Copyright"
-        },
-        zh: {
-            copyright: "版权所有"
         }
     }
 });

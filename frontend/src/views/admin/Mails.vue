@@ -13,10 +13,6 @@ const { t } = useI18n({
         en: {
             addressQueryTip: 'Leave blank to query all addresses',
             query: 'Query',
-        },
-        zh: {
-            addressQueryTip: '留空查询所有地址',
-            query: '查询',
         }
     }
 });

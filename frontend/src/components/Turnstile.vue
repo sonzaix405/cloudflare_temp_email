@@ -10,9 +10,6 @@ const { locale, t } = useI18n({
     messages: {
         en: {
             refresh: 'Refresh'
-        },
-        zh: {
-            refresh: '刷新'
         }
     }
 });

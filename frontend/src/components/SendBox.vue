@@ -47,7 +47,7 @@ const multiActionDeleteProgress = ref({ percentage: 0, tip: '0/0' })
 
 const { t } = useI18n({
   messages: {
-    en: {
+        en: {
       success: 'Success',
       refresh: 'Refresh',
       showCode: 'Change View Original Code',
@@ -58,18 +58,6 @@ const { t } = useI18n({
       cancelMultiAction: 'Cancel Multi Action',
       selectAll: 'Select All of This Page',
       unselectAll: 'Unselect All',
-    },
-    zh: {
-      success: '成功',
-      refresh: '刷新',
-      showCode: '切换查看元数据',
-      pleaseSelectMail: "请选择一封邮件查看。",
-      delete: '删除',
-      deleteMailTip: '确定要删除邮件吗?',
-      multiAction: '多选',
-      cancelMultiAction: '取消多选',
-      selectAll: '全选本页',
-      unselectAll: '取消全选',
     }
   }
 });
